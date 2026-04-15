@@ -1,0 +1,32 @@
+{
+    "name": "tbachert/ucum",
+    "description": "Parses und converts UCUM units",
+    "keywords": ["ucum"],
+    "license": "Apache-2.0",
+    "require": {
+        "php": "^8.2",
+        "antlr/antlr4-php-runtime": "^0.9.1"
+    },
+    "require-dev": {
+        "ext-dom": "*",
+        "phpunit/phpunit": "^13.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nevay\\Ucum\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Nevay\\Ucum\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        }
+    }
+}
