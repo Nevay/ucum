@@ -201,6 +201,30 @@ final class Unit {
         );
     }
 
+    /**
+     * Returns the unit atoms, including their prefixes.
+     *
+     * ```
+     * km/h => [(prefix: k, unit: m, exponent: 1), (unit: h, exponent: -1)]
+     * ```
+     *
+     * @return iterable<UnitAtom> unit atoms
+     *
+     * @experimental
+     */
+    public function atoms(): iterable {
+        for ($i = 0; $i < count($this->parts); ++$i) {
+            $p = $this->parts[$i];
+            $e = $this->exponents[$i];
+
+            yield new UnitAtom(
+                prefix: $p->prefix,
+                unit: $p->unit,
+                exponent: $e,
+            );
+        }
+    }
+
     public function __toString(): string {
         $s = '';
         for ($i = 0; $i < count($this->parts); $i++) {
