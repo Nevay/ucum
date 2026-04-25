@@ -5,6 +5,7 @@ use Antlr\Antlr4\Runtime\Tree\AbstractParseTreeVisitor;
 use Nevay\Ucum\Internal\Grammar\Context;
 use Nevay\Ucum\Unit;
 use function assert;
+use function is_int;
 
 /**
  * @extends AbstractParseTreeVisitor<Unit>
@@ -84,22 +85,24 @@ final class Visitor extends AbstractParseTreeVisitor implements Grammar\UcumVisi
             $value = +$digits;
             $factors = [];
             $factorExponents = [];
-            foreach ([2, 3, 5, 7, 11, 13, 23, 29, 31, 37] as $prime) {
-                if (($value % $prime) !== 0) {
-                    continue;
-                }
+            if (is_int($value)) {
+                foreach ([2, 3, 5, 7, 11, 13, 23, 29, 31, 37] as $prime) {
+                    if (($value % $prime) !== 0) {
+                        continue;
+                    }
 
-                $e = 0;
-                do {
-                    $value /= $prime;
-                    $e++;
-                } while (($value % $prime) === 0);
+                    $e = 0;
+                    do {
+                        $value /= $prime;
+                        $e++;
+                    } while (($value % $prime) === 0);
 
-                $factors[] = $prime;
-                $factorExponents[] = $e;
+                    $factors[] = $prime;
+                    $factorExponents[] = $e;
 
-                if ($value === 1) {
-                    break;
+                    if ($value === 1) {
+                        break;
+                    }
                 }
             }
 

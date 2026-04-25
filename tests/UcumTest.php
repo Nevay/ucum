@@ -73,4 +73,11 @@ final class UcumTest extends TestCase {
 
         $arb->convertTo($dimless);
     }
+
+    #[Test]
+    public function largeLiteralDigits(): void {
+        $u = Unit::parse('1000000000000000000000000000000');
+
+        $this->assertSame(1e30, $u->convertTo(Unit::parse('1'))->apply(1));
+    }
 }
