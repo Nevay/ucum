@@ -255,8 +255,9 @@ final class Unit {
             $exponents[] = $unit->exponents[$i] * $scale;
         }
 
-        $dimensions = $this->dimensions ?: $unit->dimensions;
-        if ($this->dimensions && $unit->dimensions) {
+        $dimensions = $this->dimensions;
+        if ($unit->dimensions) {
+            $dimensions = $dimensions ?: array_fill(0, count($unit->dimensions), 0);
             for ($i = 0; $i < count($dimensions); $i++) {
                 $dimensions[$i] += $unit->dimensions[$i] * $scale;
             }

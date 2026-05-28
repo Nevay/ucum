@@ -47,6 +47,14 @@ final class UcumTest extends TestCase {
     }
 
     #[Test]
+    public function algebraicOperationsDivideDimlessUnitBy(): void {
+        $kmh = Unit::parse('1')->divideBy(Unit::parse('h'));
+
+        $this->assertSame('1.h-1', (string) $kmh);
+        $this->assertInstanceOf(Identity::class, $kmh->convertTo(Unit::parse('/h')));
+    }
+
+    #[Test]
     public function specialUnitsDoNotSupportAlgebraicOperations(): void {
         $cel = Unit::parse('Cel');
         $m = Unit::parse('m');
