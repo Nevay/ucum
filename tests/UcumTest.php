@@ -73,6 +73,23 @@ final class UcumTest extends TestCase {
     }
 
     #[Test]
+    public function specialUnitsCannotPow(): void {
+        $cel = Unit::parse('Cel');
+
+        $this->expectException(UnitException::class);
+
+        $cel->toPower(2);
+    }
+
+    #[Test]
+    public function powZero(): void {
+        $h = Unit::parse('h');
+
+        $this->assertSame('h0', (string) $h->toPower(0));
+        $this->assertInstanceOf(Identity::class, $h->toPower(0)->convertTo(Unit::parse('1')));
+    }
+
+    #[Test]
     public function arbitraryUnitsAreNotConvertible(): void {
         $arb = Unit::parse('[arb\'U]');
         $dimless = Unit::parse('1');

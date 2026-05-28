@@ -12,6 +12,7 @@ use Nevay\Ucum\Internal\Grammar;
 use Nevay\Ucum\Internal\Part;
 use Nevay\Ucum\Internal\Visitor;
 use Nevay\Ucum\Internal\Vocabulary;
+use function array_fill;
 use function array_slice;
 use function assert;
 use function count;
@@ -172,6 +173,16 @@ final class Unit {
     public function toPower(int $exp): Unit {
         if ($exp === 1) {
             return $this;
+        }
+
+        if ($exp === 0) {
+            return new Unit(
+                parts: $this->parts,
+                exponents: array_fill(0, count($this->exponents), 0),
+                dimensions: [],
+                factors: [],
+                factorExponents: [],
+            );
         }
 
         $this->ensureSupportsAlgebraicOperations($this);
