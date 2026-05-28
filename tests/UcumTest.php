@@ -73,6 +73,24 @@ final class UcumTest extends TestCase {
     }
 
     #[Test]
+    public function specialUnitsAreScalableByDivideBy(): void {
+        $cel = Unit::parse('Cel');
+        $five = Unit::parse('5');
+
+        $this->assertSame('Cel.5-1', (string) $cel->divideBy($five));
+    }
+
+    #[Test]
+    public function specialUnitsCannotDivideBy(): void {
+        $cel = Unit::parse('Cel');
+        $five = Unit::parse('5');
+
+        $this->expectException(UnitException::class);
+
+        $five->divideBy($cel);
+    }
+
+    #[Test]
     public function specialUnitsCannotPow(): void {
         $cel = Unit::parse('Cel');
 

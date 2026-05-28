@@ -160,6 +160,7 @@ final class Unit {
     public function divideBy(Unit $unit): Unit {
         $this->ensureSupportsAlgebraicOperations($unit);
         $unit->ensureSupportsAlgebraicOperations($this);
+        $unit->ensureSupportsAlgebraicOperations($unit);
 
         return $this->_multiply($unit, -1);
     }
