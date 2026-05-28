@@ -3,6 +3,7 @@ namespace Nevay\Ucum\Internal\Factor;
 
 use Nevay\Ucum\Internal\Factor;
 use function count;
+use function substr;
 
 final class Composite implements Factor {
 
@@ -75,6 +76,6 @@ final class Composite implements Factor {
             $s .= ' ';
         }
 
-        return $s;
+        return substr($s, 0, -1);
     }
 }
