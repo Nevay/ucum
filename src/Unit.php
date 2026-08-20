@@ -82,6 +82,15 @@ final class Unit {
      * @throws UnitException if the given unit string is invalid
      */
     public static function parse(string $unit, Variant $variant = Variant::CaseSensitive): Unit {
+        $vocabulary = match ($variant) {
+            Variant::CaseSensitive => new Vocabulary\VocabularyCS(),
+            Variant::CaseInsensitive => new Vocabulary\VocabularyCI(),
+        };
+
+        if ($parsed = $vocabulary->resolveUnit($unit) ?? $vocabulary->resolvePrefixedUnit($unit)) {
+            return $parsed;
+        }
+
         $input = InputStream::fromString($unit);
         $lexer = match ($variant) {
             Variant::CaseSensitive => new Grammar\UcumCS($input),
@@ -92,10 +101,7 @@ final class Unit {
         $parser->addErrorListener(new DiagnosticErrorListener());
         $parser->addErrorListener(new ErrorListener());
 
-        $visitor = match ($variant) {
-            Variant::CaseSensitive => new Visitor(new Vocabulary\VocabularyCS()),
-            Variant::CaseInsensitive => new Visitor(new Vocabulary\VocabularyCI()),
-        };
+        $visitor = new Visitor($vocabulary);
 
         try {
             return $visitor->visitUnit($parser->unit());
