@@ -85,7 +85,7 @@ final class Visitor extends AbstractParseTreeVisitor implements Grammar\UcumVisi
             $value = +$digits;
             $factors = [];
             $factorExponents = [];
-            if (is_int($value)) {
+            if ($value > 3 && is_int($value)) {
                 foreach ([2, 3, 5, 7, 11, 13, 23, 29, 31, 37] as $prime) {
                     if (($value % $prime) !== 0) {
                         continue;
