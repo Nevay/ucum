@@ -2,6 +2,7 @@
 namespace Nevay\Ucum\Internal;
 
 use Antlr\Antlr4\Runtime\Tree\AbstractParseTreeVisitor;
+use AssertionError;
 use Nevay\Ucum\Internal\Grammar\Context;
 use Nevay\Ucum\Unit;
 use function assert;
@@ -74,10 +75,10 @@ final class Visitor extends AbstractParseTreeVisitor implements Grammar\UcumVisi
 
     public function visitSimpleUnit(Context\SimpleUnitContext $context): Unit {
         if ($context->prefixedAtom) {
-            return $this->vocabulary->resolvePrefixedUnit($context->prefixedAtom->getText());
+            return $this->vocabulary->resolvePrefixedUnit($context->prefixedAtom->getText()) ?? throw new AssertionError();
         }
         if ($context->atom) {
-            return $this->vocabulary->resolveUnit($context->atom->getText());
+            return $this->vocabulary->resolveUnit($context->atom->getText()) ?? throw new AssertionError();
         }
         if ($context->digits) {
             $digits = $context->digits->getText();

@@ -5,7 +5,7 @@ use Nevay\Ucum\Unit;
 
 interface Vocabulary {
 
-    public function resolvePrefixedUnit(string $prefixedAtom): Unit;
+    public function resolvePrefixedUnit(string $prefixedAtom): ?Unit;
 
-    public function resolveUnit(string $atom): Unit;
+    public function resolveUnit(string $atom): ?Unit;
 }
